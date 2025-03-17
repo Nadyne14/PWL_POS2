@@ -31,8 +31,8 @@ class KategoriDataTable extends DataTable
      */
     public function query(KategoriModel $model): QueryBuilder
     {
-        return $model->newQuery();
-    }
+        return $model->select('id', 'kategori_kode', 'nama_kategori', 'created_at', 'updated_at');
+    }    
 
     /**
      * Optional method if you want to use the html builder.
@@ -67,9 +67,9 @@ class KategoriDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'), */
-            Column::make('kategori_id'),
+            Column::make('id'),
             Column::make('kategori_kode'),
-            Column::make('kategori_nama'),
+            Column::make('nama_kategori'),
             Column::make('created_at'),
             Column::make('updated_at'),
         ];
