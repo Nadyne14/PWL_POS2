@@ -7,20 +7,27 @@ use App\Http\Controllers\UserController;
 use App\DataTables\KategoriDataTable;
 
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
+// Route User
+Route::get('/user', [UserController::class, 'index'])->name('user.index');
+Route::get('/user/tambah', [UserController::class, 'tambah'])->name('user.tambah');
+Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan'])->name('user.store');
+Route::get('/user/ubah/{id}', [UserController::class, 'ubah'])->name('user.ubah');
+Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan'])->name('user.update');
+Route::delete('/user/hapus/{id}', [UserController::class, 'hapus'])->name('user.hapus');
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+
+
+// Route Level
 Route::get('/level', [LevelController::class, 'index']);
+
+// Route Kategori
 Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
-Route::get('/user', [UserController::class, 'index']);
-Route::get('/user/tambah', [UserController::class, 'tambah']);
-Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan']);
-Route::get('/user/ubah/{id}', [UserController::class, 'ubah']);
-Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan']);
-Route::get('/user/hapus/{id}', [UserController::class, 'hapus']);
-Route::post('/kategori', [KategoriController::class, 'store']);
 Route::get('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
+Route::post('/kategori', [KategoriController::class, 'store']);
 Route::get('/kategori/{id}/edit', [KategoriController::class, 'edit'])->name('kategori.edit');
 Route::put('/kategori/{id}', [KategoriController::class, 'update'])->name('kategori.update');
 Route::delete('/kategori/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');

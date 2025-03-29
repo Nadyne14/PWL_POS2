@@ -2,23 +2,56 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LevelModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StoreLevelRequest;
+use App\Http\Requests\UpdateLevelRequest;
 
 class LevelController extends Controller
 {
-    public function index() 
+    public function index()
     {
-        // DB::insert('insert into m_level(level_kode, level_nama, created_at) values(?, ?, ?)', ['CUS', 'Pelanggan', now()]);
-        // return 'Insert data baru berhasil!';
+        $levels = LevelModel::all();
+        return view('level', ['data' => $levels]);
+    }
 
-        // $row = DB::update('UPDATE m_level SET level_nama = ? WHERE level_kode = ?', ['Customer', 'CUS']);
-        // return 'Update berhasil!. Jumlah data yang diupdate: ' . $row . ' baris';
+    public function tambah()
+    {
+        return view('level_tambah');
+    }
 
-        // $row = DB::delete('delete from m_level where level_kode = ?', ['CUS']);
-        // return 'Delete data berhasil. Jumlah data yang dihapus: ' . $row . ' baris';
+    public function tambah_simpan(StoreLevelRequest $request)
+    {
+        LevelModel::create([
+            'level_kode' => $request->level_kode,
+            'level_nama' => $request->level_nama,
+        ]);
 
-        $data = DB::select('select * from m_level');
-        return view('level', ['data' => $data]);
+        return redirect()->route('level.index')->with('success', 'Level berhasil ditambahkan!');
+    }
+
+    public function ubah($id)
+    {
+        $level = LevelModel::findOrFail($id);
+        return view('level_ubah', compact('level'));
+    }
+
+    public function ubah_simpan(UpdateLevelRequest $request, $id)
+    {
+        $level = LevelModel::findOrFail($id);
+        $level->update([
+            'level_kode' => $request->level_kode,
+            'level_nama' => $request->level_nama,
+        ]);
+
+        return redirect()->route('level.index')->with('success', 'Level berhasil diperbarui!');
+    }
+
+    public function hapus($id)
+    {
+        $level = LevelModel::findOrFail($id);
+        $level->delete();
+
+        return redirect()->route('level.index')->with('success', 'Level berhasil dihapus!');
     }
 }
