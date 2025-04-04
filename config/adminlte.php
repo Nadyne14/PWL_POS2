@@ -316,11 +316,6 @@ return [
             'text' => 'search',
         ],
         [
-            'text' => 'Manage Kategori',
-            'route' => 'kategori.index',
-            'icon' => 'fas fa-tags',
-        ],        
-        [
             'text' => 'blog',
             'url' => 'admin/blog',
             'can' => 'manage-blog',
