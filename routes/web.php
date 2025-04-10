@@ -6,12 +6,21 @@ use App\Http\Controllers\LevelController;
 use App\Http\Controllers\UserController;
 use App\DataTables\KategoriDataTable;
 use App\Http\Controllers\POSController;
+use App\Http\Controllers\WelcomeController;
 
 
 
-Route::get('/welcome', function () {
-    return view('welcome');
+Route::get('/                                                                                              ', function () {
+    $breadcrumb = (object)[
+        'title' => 'Selamat Datang',
+        'list' => ['Home', 'Welcome']
+    ];
+
+    $activeMenu = 'dashboard';
+
+    return view('welcome', compact('breadcrumb', 'activeMenu'));
 });
+
 
 // Route User
 Route::get('/user', [UserController::class, 'index'])->name('user.index');
@@ -34,3 +43,4 @@ Route::get('/kategori/{id}/edit', [KategoriController::class, 'edit'])->name('ka
 Route::put('/kategori/{id}', [KategoriController::class, 'update'])->name('kategori.update');
 Route::delete('/kategori/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
 Route::resource('m_user', POSController::class);
+// Route::get('/', [WelcomeController::class, 'index'])->name('home');

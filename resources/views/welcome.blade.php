@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+{{-- @extends('adminlte::page')
 
 @section('title', 'Dashboard')
 
@@ -30,8 +30,46 @@
 
 @section('css')
     {{-- Tambahkan CSS jika diperlukan --}}
-@stop
+{{-- @stop
 
 @section('js')
     <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
-@stop
+@stop --}} 
+
+
+{{-- @extends('layouts.breadcrumb')
+
+@section('content')
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Halo, apa kabar!!!</h3>
+        </div>
+        <div class="card-body">
+            Selamat datang semua, ini adalah halaman utama dari aplikasi ini.
+
+            <hr>
+            <p><strong>Breadcrumb:</strong></p>
+            <ul>
+                @foreach($breadcrumb->list ?? [] as $item)
+                    <li>{{ $item }}</li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+@endsection --}}
+
+
+@extends('layouts.template')
+
+@section('content')
+    @include('layouts.breadcrumb') {{-- panggil breadcrumb AdminLTE --}}
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Halo, apa kabar!!!</h3>
+        </div>
+        <div class="card-body">
+            Selamat datang semua, ini adalah halaman utama dari aplikasi ini.
+        </div>
+    </div>
+@endsection
