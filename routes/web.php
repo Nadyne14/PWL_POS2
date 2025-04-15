@@ -10,7 +10,7 @@ use App\Http\Controllers\WelcomeController;
 
 
 
-Route::get('/                                                                                              ', function () {
+Route::get('/', function () {
     $breadcrumb = (object)[
         'title' => 'Selamat Datang',
         'list' => ['Home', 'Welcome']
@@ -44,3 +44,13 @@ Route::put('/kategori/{id}', [KategoriController::class, 'update'])->name('kateg
 Route::delete('/kategori/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
 Route::resource('m_user', POSController::class);
 // Route::get('/', [WelcomeController::class, 'index'])->name('home');
+
+    // Route::get('/', [UserController::class, 'index']); // Display the main user page
+    Route::post('/list', [UserController::class, 'list']); // Show user data as JSON for DataTables
+    Route::get('/create', [UserController::class, 'create']); // Display the form to add a new user
+    Route::post('/', [UserController::class, 'store']); // Save new user data
+    Route::get('/{id}', [UserController::class, 'show']); // Show user details
+    Route::get('/{id}/edit', [UserController::class, 'edit']); // Display the form to edit user data
+    Route::put('/{id}', [UserController::class, 'update']); // Save updates to user data
+    Route::delete('/{id}', [UserController::class, 'destroy']); // Delete user data—
+
