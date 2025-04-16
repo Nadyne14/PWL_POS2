@@ -21,10 +21,8 @@ class m_user extends Model
 
    public function level()
     {
-        return $this->belongsTo(m_level::class, 'level_id', 'level_id');
+        return $this->belongsTo(\App\Models\LevelModel::class, 'level_id', 'level_id');
     }
 
 
 }
-
-

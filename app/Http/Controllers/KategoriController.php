@@ -9,8 +9,28 @@ class KategoriController extends Controller
 {
     public function index()
     {
-        $kategori = KategoriModel::all();
-        return view('kategori.index', compact('kategori'));
+        $kategori = \App\Models\KategoriModel::all();
+        $activeMenu = 'kategori';
+        return view('kategori.index', compact('kategori', 'activeMenu'));
+    }
+
+    public function list(Request $request)
+    {
+        $kategori = KategoriModel::select('id', 'kategori_kode', 'nama_kategori', 'created_at', 'updated_at');
+
+        return \Yajra\DataTables\DataTables::of($kategori)
+            ->addIndexColumn()
+            ->addColumn('action', function ($row) {
+                $btn = '<a href="' . route('kategori.edit', $row->id) . '" class="btn btn-warning btn-sm">Edit</a> ';
+                $btn .= '<form action="' . route('kategori.destroy', $row->id) . '" method="POST" style="display:inline;">';
+                $btn .= csrf_field();
+                $btn .= method_field('DELETE');
+                $btn .= '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Yakin ingin menghapus?\')">Delete</button>';
+                $btn .= '</form>';
+                return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     public function create()
