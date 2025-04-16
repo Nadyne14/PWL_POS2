@@ -22,15 +22,21 @@ Route::get('/', function () {
 });
 
 
-// Route User
-Route::get('/user', [UserController::class, 'index'])->name('user.index');
-Route::get('/user/tambah', [UserController::class, 'tambah'])->name('user.tambah');
-Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan'])->name('user.store');
-Route::get('/user/ubah/{id}', [UserController::class, 'ubah'])->name('user.ubah');
-Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan'])->name('user.update');
-Route::delete('/user/hapus/{id}', [UserController::class, 'hapus'])->name('user.hapus');
-Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-
+Route::group(['prefix' => 'user'], function () {
+    Route::get('/', [UserController::class, 'index'])->name('user.index');
+    // Commented out old routes for tambah and tambah_simpan to avoid conflicts
+    // Route::get('/tambah', [UserController::class, 'tambah'])->name('user.tambah');
+    // Route::post('/tambah_simpan', [UserController::class, 'tambah_simpan'])->name('user.store');
+    Route::get('/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/', [UserController::class, 'store'])->name('user.store');
+    Route::get('/ubah/{id}', [UserController::class, 'ubah'])->name('user.ubah');
+    Route::put('/ubah_simpan/{id}', [UserController::class, 'ubah_simpan'])->name('user.update');
+    Route::delete('/hapus/{id}', [UserController::class, 'hapus'])->name('user.hapus');
+    Route::get('/{id}', [UserController::class, 'show'])->name('user.show');
+    Route::get('/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::put('/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+});
 
 // Route Level
 Route::get('/level', [LevelController::class, 'index']);
