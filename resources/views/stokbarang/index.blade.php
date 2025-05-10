@@ -22,22 +22,26 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nama Supplier</th>
-                        <th>Alamat</th>
-                        <th>Telepon</th>
+                        <th>Nama Barang</th>
+                        <th>Jumlah Masuk</th>
+                        <th>Jumlah Keluar</th>
+                        <th>Sisa Stok</th>
+                        <th>Waktu Input</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($suppliers as $supplier)
+                    @forelse ($stokBarang as $stok)
                     <tr>
-                        <td>{{ $supplier->id }}</td>
-                        <td>{{ $supplier->nama_supplier }}</td>
-                        <td>{{ $supplier->alamat }}</td>
-                        <td>{{ $supplier->telepon }}</td>
+                        <td>{{ $stok->id }}</td>
+                        <td>{{ $stok->nama_barang }}</td>
+                        <td>{{ $stok->jumlah_masuk }}</td>
+                        <td>{{ $stok->jumlah_keluar }}</td>
+                        <td>{{ $stok->sisa_stok }}</td>
+                        <td>{{ \Carbon\Carbon::parse($stok->created_at)->format('d-m-Y H:i') }}</td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4" class="text-center">Tidak ada data supplier.</td>
+                        <td colspan="6" class="text-center">Tidak ada data stok barang.</td>
                     </tr>
                     @endforelse
                 </tbody>

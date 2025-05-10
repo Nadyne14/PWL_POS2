@@ -38,6 +38,13 @@ class UserController extends Controller
         ]);
     }
 
+    // Menampilkan halaman form tambah user ajax
+    public function create_ajax()
+    {
+        $levels = LevelModel::all();
+        return view('m_user.create_ajax', compact('levels'));
+    }
+
     public function tambah()
     {
         $levels = LevelModel::all();
@@ -168,80 +175,23 @@ class UserController extends Controller
         return view('m_user.show', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user, 'activeMenu' => $activeMenu]);
     }
 
-    // Menampilkan halaman edit user
-    public function edit(string $id)
-    {
-        $user = UserModel::findOrFail($id);
-        $levels = LevelModel::all();
-
-        $breadcrumb = (object) [
-            'title' => 'Edit User',
-            'list' => ['Home', 'User', 'Edit']
-        ];
-
-        $page = (object) [
-            'title' => 'Edit user'
-        ];
-
-        $activeMenu = 'user';
-
-        return view('m_user.edit', ['breadcrumb' => $breadcrumb, 'page' => $page, 'user' => $user, 'levels' => $levels, 'activeMenu' => $activeMenu]);
-    }
-
-    // Menyimpan perubahan data user
-    public function update(Request $request, string $id)
-    {
-        $request->validate([
-            'username' => 'required|unique:m_user,username,' . $id . ',user_id|min:3',
-            'nama' => 'required|string|max:100',
-            'password' => 'nullable|min:5',
-            'level_id' => 'required|integer'
-        ]);
-
-        $user = UserModel::findOrFail($id);
-        $user->update([
-            'username' => $request->username,
-            'nama' => $request->nama,
-            'password' => $request->password ? bcrypt($request->password) : $user->password,
-            'level_id' => $request->level_id
-        ]);
-
-        return redirect('/user')->with('success', 'Data user berhasil diubah');
-    }
-
-    // Menghapus data user
-    public function destroy(string $id)
-    {
-        $check = UserModel::find($id);
-        if (!$check) { // untuk mengecek apakah data user dengan id yang dimaksud ada atau tidak
-            return redirect('/user')->with('error', 'Data user tidak ditemukan');
-        }
-
-        try {
-            UserModel::destroy($id); // Hapus data user
-
-            return redirect('/user')->with('success', 'Data user berhasil dihapus');
-        } catch (\Illuminate\Database\QueryException $e) {
-            // Jika terjadi error ketika menghapus data, redirect kembali ke halaman dengan membawa pesan error
-            return redirect('/user')->with('error', 'Data user gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini');
-        }
-    }
-
-    public function create_ajax()
-    {
-        $level = LevelModel::select('level_id', 'level_nama')->get();
-
-        return view('m_user.create_ajax')
-            ->with('level', $level);
-    }
-
-    // Menampilkan halaman form edit user ajax
+    // Menampilkan halaman edit user ajax
     public function edit_ajax(string $id)
     {
         $user = UserModel::find($id);
         $level = LevelModel::select('level_id', 'level_nama')->get();
 
         return view('m_user.edit_ajax', ['user' => $user, 'level' => $level]);
+    }
+
+    // Menampilkan halaman detail user ajax
+    public function show_ajax(string $id)
+    {
+        $user = UserModel::with('level')->find($id);
+        if (!$user) {
+            return response()->json(['message' => 'Data tidak ditemukan'], 404);
+        }
+        return view('m_user.show_ajax', ['user' => $user]);
     }
 
     // Menyimpan perubahan data user ajax

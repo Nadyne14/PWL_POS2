@@ -14,7 +14,7 @@ class UpdateLevelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'level_kode' => 'required|string|max:10|unique:m_level,level_kode,' . $this->route('id'),
+            'level_kode' => 'required|string|max:10|unique:m_level,level_kode,' . $this->route('id') . ',level_id',
             'level_nama' => 'required|string|max:50',
         ];
     }

@@ -9,14 +9,14 @@ class KategoriController extends Controller
 {
     public function index()
     {
-        $kategori = \App\Models\KategoriModel::all();
+        $kategori = \App\Models\KategoriModel::select('id', 'kode_kategori', 'nama_kategori')->get();
         $activeMenu = 'kategori';
         return view('kategori.index', compact('kategori', 'activeMenu'));
     }
 
     public function list(Request $request)
     {
-        $kategori = KategoriModel::select('id', 'kategori_kode', 'nama_kategori', 'created_at', 'updated_at');
+        $kategori = KategoriModel::select('id', 'kode_kategori', 'nama_kategori', 'created_at', 'updated_at');
 
         return \Yajra\DataTables\DataTables::of($kategori)
             ->addIndexColumn()
@@ -35,18 +35,19 @@ class KategoriController extends Controller
 
     public function create()
     {
-        return view('kategori.create');
+        $activeMenu = 'kategori';
+        return view('kategori.create', compact('activeMenu'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'kategori_kode' => 'required|unique:m_kategori,kategori_kode',
+            'kode_kategori' => 'required|unique:m_kategori,kode_kategori',
             'nama_kategori' => 'required'
         ]);
 
         KategoriModel::create([
-            'kategori_kode' => $request->kategori_kode,
+            'kode_kategori' => $request->kode_kategori,
             'nama_kategori' => $request->nama_kategori
         ]);
 
@@ -62,13 +63,13 @@ class KategoriController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'kategori_kode' => 'required|unique:m_kategori,kategori_kode,' . $id,
+            'kode_kategori' => 'required|unique:m_kategori,kode_kategori,' . $id,
             'nama_kategori' => 'required'
         ]);
 
         $kategori = KategoriModel::findOrFail($id);
         $kategori->update([
-            'kategori_kode' => $request->kategori_kode,
+            'kode_kategori' => $request->kode_kategori,
             'nama_kategori' => $request->nama_kategori
         ]);
 

@@ -8,6 +8,9 @@
 <div class="card card-outline card-primary">
     <div class="card-header">
         <h3 class="card-title">Data Level Pengguna</h3>
+        <div class="card-tools">
+            <a href="{{ route('level.tambah') }}" class="btn btn-primary btn-sm">Tambah Level</a>
+        </div>
     </div>
     <div class="card-body">
         @if (session('success'))
@@ -23,6 +26,7 @@
                     <th>ID</th>
                     <th>Kode Level</th>
                     <th>Nama Level</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,6 +35,9 @@
                     <td>{{ $d->level_id }}</td>
                     <td>{{ $d->level_kode }}</td>
                     <td>{{ $d->level_nama }}</td>
+                    <td>
+                        <a href="{{ route('level.ubah', $d->level_id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

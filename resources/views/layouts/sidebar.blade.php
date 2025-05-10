@@ -663,6 +663,9 @@
     <!-- /.sidebar-menu -->
   </div> --}}
 
+  @php
+  $activeMenu = $activeMenu ?? '';
+@endphp
 
   <div class="sidebar">
     <!-- SidebarSearch Form -->

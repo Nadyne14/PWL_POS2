@@ -22,7 +22,7 @@
             <label for="level_id">Level</label>
             <select class="form-control" id="level_id" name="level_id" required>    
                 <option value="">Pilih Level</option>
-                @foreach($level as $item)
+                @foreach($levels as $item)
                     <option value="{{ $item->level_id }}">{{ $item->level_nama }}</option>
                 @endforeach
             </select>
@@ -38,45 +38,45 @@
 @push('js')
 <script>
 $(document).ready(function() {
-        $('#formTambahUserAjax').submit(function(e) {
-            e.preventDefault();
-            var form = $(this);
-            $.ajax({
-                url: form.attr('action'),
-                method: 'POST',
-                data: form.serialize(),
-                success: function(response) {
-                    if(response.status) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Berhasil',
-                            text: response.message,
-                            timer: 2000,
-                            showConfirmButton: false
-                        });
-                        $('#myModal').modal('hide');
-                        location.reload();
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Gagal',
-                            text: response.message
-                        });
-                    }
-                },
-                error: function(xhr) {
-                    var errorMsg = 'Terjadi kesalahan saat menyimpan data.';
-                    if(xhr.responseJSON && xhr.responseJSON.message) {
-                        errorMsg = xhr.responseJSON.message;
-                    }
+    $('#formTambahUserAjax').submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
+        $.ajax({
+            url: form.attr('action'),
+            method: 'POST',
+            data: form.serialize(),
+            success: function(response) {
+                if(response.status) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: response.message,
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    $('#myModal').modal('hide');
+                    location.reload();
+                } else {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error',
-                        text: errorMsg
+                        title: 'Gagal',
+                        text: response.message
                     });
                 }
-            });
+            },
+            error: function(xhr) {
+                var errorMsg = 'Terjadi kesalahan saat menyimpan data.';
+                if(xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMsg = xhr.responseJSON.message;
+                }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: errorMsg
+                });
+            }
         });
+    });
 });
 </script>
 @endpush
