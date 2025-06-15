@@ -15,9 +15,11 @@ Route::get('/', function () {
     return view('home');
 })->name('home.simple');
 
+/*
 Route::get('/login', function () {
     return view('m_user.login');
 })->name('login');
+*/
 
 Route::get('/logout', function () {
     session()->flush();
@@ -32,7 +34,7 @@ Route::get('/logout', function () {
 
 Route::pattern('id','[0-9]+'); // Ensures the {id} parameter is always numeric
 
-Route::get('/dashboard', [WelcomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [WelcomeController::class, 'index'])->name('dashboard');
 
 Route::get('/user/create', [UserController::class, 'create'])->name('users.create');
 Route::get('/level', [LevelController::class, 'index'])->name('level.index');
@@ -81,3 +83,4 @@ Route::delete('/supplier/{id}', [SupplierController::class, 'destroy'])->name('s
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+

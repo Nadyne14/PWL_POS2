@@ -48,9 +48,19 @@
     <h1>Selamat Datang di Halaman Utama</h1>
     <p>Ini adalah halaman utama sederhana sebelum dashboard.</p>
     <a href="{{ url('/login') }}" class="btn btn-primary">Login</a>
-    {{-- <a href="{{ url('/dashboard') }}" class="btn btn-primary">Masuk ke Dashboard</a> --}}
+    <a href="{{ url('/dashboard') }}" class="btn btn-primary">Masuk ke Dashboard</a>
   </div>
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script>
+    document.getElementById('toggleDashboardLink').addEventListener('click', function() {
+      var dashboardLink = document.getElementById('dashboardLink');
+      if (dashboardLink.style.display === 'none') {
+        dashboardLink.style.display = 'inline-block';
+      } else {
+        dashboardLink.style.display = 'none';
+      }
+    });
+  </script>
 </body>
 </html>
