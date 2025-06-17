@@ -34,20 +34,22 @@ Route::get('/logout', function () {
 
 Route::pattern('id','[0-9]+'); // Ensures the {id} parameter is always numeric
 
-Route::get('/dashboard', [WelcomeController::class, 'index'])->name('dashboard');
+Route::middleware(['auth', 'authorize:ADM,MNG'])->group(function () {
+    Route::get('/dashboard', [WelcomeController::class, 'index'])->name('dashboard');
 
-Route::get('/user/create', [UserController::class, 'create'])->name('users.create');
-Route::get('/level', [LevelController::class, 'index'])->name('level.index');
-Route::get('/level/tambah', [LevelController::class, 'tambah'])->name('level.tambah');
-Route::get('/level/{id}/ubah', [LevelController::class, 'ubah'])->name('level.ubah');
-Route::post('/level/tambah_simpan', [LevelController::class, 'tambah_simpan'])->name('level.tambah_simpan');
-Route::put('/level/{id}/ubah_simpan', [LevelController::class, 'ubah_simpan'])->name('level.ubah_simpan');
-Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
-Route::get('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
-Route::post('/kategori', [KategoriController::class, 'store']);
-Route::get('/kategori/{id}/edit', [KategoriController::class, 'edit'])->name('kategori.edit');
-Route::put('/kategori/{id}', [KategoriController::class, 'update'])->name('kategori.update');
-Route::delete('/kategori/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
+    Route::get('/user/create', [UserController::class, 'create'])->name('users.create');
+    Route::get('/level', [LevelController::class, 'index'])->name('level.index');
+    Route::get('/level/tambah', [LevelController::class, 'tambah'])->name('level.tambah');
+    Route::get('/level/{id}/ubah', [LevelController::class, 'ubah'])->name('level.ubah');
+    Route::post('/level/tambah_simpan', [LevelController::class, 'tambah_simpan'])->name('level.tambah_simpan');
+    Route::put('/level/{id}/ubah_simpan', [LevelController::class, 'ubah_simpan'])->name('level.ubah_simpan');
+    Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
+    Route::get('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
+    Route::post('/kategori', [KategoriController::class, 'store']);
+    Route::get('/kategori/{id}/edit', [KategoriController::class, 'edit'])->name('kategori.edit');
+    Route::put('/kategori/{id}', [KategoriController::class, 'update'])->name('kategori.update');
+    Route::delete('/kategori/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
+});
 
 Route::group(['prefix' => 'user'], function () {
     Route::get('/', [UserController::class, 'index'])->name('user.index');

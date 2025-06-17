@@ -2,29 +2,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class UserModel extends Model
+class UserModel extends Authenticatable
 {
-    // use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $table = 'm_user';
     protected $primaryKey = 'user_id';
-
-    // /**
-    //  * The attributes that are mass assignable.
-    //  *
-    //  * @var array
-    //  */
-    // protected $fillable = ['level_id', 'username', 'nama', 'password'];
-
-    // public function level(): BelongsTo
-    // {
-    //     return $this->belongsTo(LevelModel::class, 'level_id', 'level_id');
-    // }
-
-
 
     /**
      * Relasi ke tabel level
@@ -48,5 +35,13 @@ class UserModel extends Model
     public function hasRole($role): bool
     {
         return $this->level->level_kode == $role;
+    }
+
+    /**
+     * Mendapatkan kode role
+     */
+    public function getRole()
+    {
+        return $this->level->level_kode;
     }
 }
