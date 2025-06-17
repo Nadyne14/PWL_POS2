@@ -58,9 +58,9 @@
                     </div>
                 </div>
             </form>
-            <p class="mt-3 mb-1">
-                <a href="{{ url('/') }}">Kembali ke Home</a>
-            </p>
+<p class="mt-3 mb-1">
+    Don't have an account? <a href="{{ route('user.create') }}">Sign up/Register</a>
+</p>
         </div>
     </div>
 </div>

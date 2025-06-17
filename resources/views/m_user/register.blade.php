@@ -10,7 +10,7 @@
     <div class="card-body register-card-body">
       <p class="login-box-msg">Register a new account</p>
 
-      <form action="{{ route('user.register') }}" method="POST">
+<form action="{{ route('user.store') }}" method="POST">
         @csrf
         <div class="input-group mb-3">
           <input type="text" name="username" class="form-control" placeholder="Username" required>
